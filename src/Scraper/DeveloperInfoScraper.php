@@ -43,18 +43,18 @@ class DeveloperInfoScraper implements ParseHandlerInterface
         $developerId = $query[GPlayApps::REQ_PARAM_ID];
         $url = (string) $request->getUri()->withQuery(http_build_query([GPlayApps::REQ_PARAM_ID => $developerId]));
 
-        $scriptDataInfo = $this->getScriptDataInfo($request, $response);
+        $scriptDataInfo = $this->getScriptDataInfo($request, $response, $developerId);
 
-        $name = $scriptDataInfo[0][0][0];
+        $name = $scriptDataInfo[13][4][0];
 
-        $cover = empty($scriptDataInfo[0][9][0][3][2])
+        $cover = empty($scriptDataInfo[13][1][0][3][2])
             ? null
-            : new GoogleImage($scriptDataInfo[0][9][0][3][2]);
-        $icon = empty($scriptDataInfo[0][9][1][3][2])
+            : new GoogleImage($scriptDataInfo[13][1][0][3][2]);
+        $icon = empty($scriptDataInfo[13][2][0][3][2])
             ? null
-            : new GoogleImage($scriptDataInfo[0][9][1][3][2]);
-        $developerSite = $scriptDataInfo[0][9][2][0][5][2] ?? null;
-        $description = $scriptDataInfo[0][10][1][1] ?? '';
+            : new GoogleImage($scriptDataInfo[13][2][0][3][2]);
+        $developerSite = $scriptDataInfo[13][0][0][5][2] ?? null;
+        $description = $scriptDataInfo[13][5][1][1] ?? '';
 
         return new Developer(
             Developer::newBuilder()
@@ -71,20 +71,21 @@ class DeveloperInfoScraper implements ParseHandlerInterface
     /**
      * @param RequestInterface  $request
      * @param ResponseInterface $response
+     * @param string            $developerId
      *
      * @throws GooglePlayException
      *
      * @return array
      */
-    private function getScriptDataInfo(RequestInterface $request, ResponseInterface $response): array
+    private function getScriptDataInfo(RequestInterface $request, ResponseInterface $response, string $developerId): array
     {
         $scriptData = ScraperUtil::extractScriptData($response->getBody()->getContents());
 
         $scriptDataInfo = null;
 
         foreach ($scriptData as $scriptValue) {
-            if (isset($scriptValue[0][21])) {
-                $scriptDataInfo = $scriptValue; // ds:5
+            if (isset($scriptValue[1][0][12][0][0]) && (string)$scriptValue[1][0][12][0][0] === $developerId) {
+                $scriptDataInfo = $scriptValue[1][0]; // ds:5.1.0
                 break;
             }
         }

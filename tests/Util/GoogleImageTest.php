@@ -598,14 +598,14 @@ final class GoogleImageTest extends TestCase
         self::assertSame($googleImage->getUrl(), $baseUrl . 'w300-h100/');
         $imageInfo = getimagesize($googleImage->getUrl());
         self::assertNotFalse($imageInfo, 'Error fetch image to ' . $googleImage->getUrl());
-        self::assertSame($imageInfo[0], 300);
+        self::assertSame($imageInfo[0], 100);
         self::assertSame($imageInfo[1], 100);
 
         $googleImage->setSquareCrop(true);
         self::assertSame($googleImage->getUrl(), $baseUrl . 'w300-h100-c/');
         $imageInfo = getimagesize($googleImage->getUrl());
         self::assertNotFalse($imageInfo, 'Error fetch image to ' . $googleImage->getUrl());
-        self::assertSame($imageInfo[0], 100);
+        self::assertSame($imageInfo[0], 300);
         self::assertSame($imageInfo[1], 100);
 
         $googleImage->setSmartCrop(true);

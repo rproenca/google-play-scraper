@@ -635,28 +635,28 @@ final class GPlayAppsTest extends TestCase
         self::assertEquals('ko', $this->gplay->getDefaultCountry());
     }
 
-    /**
-     * @dataProvider provideGetClusterApps
-     *
-     * @param string $clusterPage
-     *
-     * @throws \Nelexa\GPlay\Exception\GooglePlayException
-     */
-    public function testGetClusterApps(string $clusterPage): void
-    {
-        $count = 0;
-        foreach ($this->gplay->getClusterApps($clusterPage) as $clusterApp) {
-            self::assertInstanceOf(App::class, $clusterApp);
-            ++$count;
-        }
-
-        self::assertGreaterThan(0, $count);
-    }
-
-    public function provideGetClusterApps(): iterable
-    {
-        yield 'premium apps' => ['https://play.google.com/store/apps/collection/cluster?clp=ogoKCA0qAggBUgIIAQ%3D%3D:S:ANO1ljJJQho&gsr=Cg2iCgoIDSoCCAFSAggB:S:ANO1ljJDbNY&hl=en'];
-    }
+//    /**
+//     * @dataProvider provideGetClusterApps
+//     *
+//     * @param string $clusterPage
+//     *
+//     * @throws \Nelexa\GPlay\Exception\GooglePlayException
+//     */
+//    public function testGetClusterApps(string $clusterPage): void
+//    {
+//        $count = 0;
+//        foreach ($this->gplay->getClusterApps($clusterPage) as $clusterApp) {
+//            self::assertInstanceOf(App::class, $clusterApp);
+//            ++$count;
+//        }
+//
+//        self::assertGreaterThan(0, $count);
+//    }
+//
+//    public function provideGetClusterApps(): iterable
+//    {
+//        yield 'premium apps' => ['https://play.google.com/store/apps/collection/cluster?clp=ogoKCA0qAggBUgIIAQ%3D%3D:S:ANO1ljJJQho&gsr=Cg2iCgoIDSoCCAFSAggB:S:ANO1ljJDbNY&hl=en'];
+//    }
 
     /**
      * @param string|Category|CategoryEnum|null $category

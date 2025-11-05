@@ -48,7 +48,8 @@ class HttpClient
 
             $defaultOptions = [
                 RequestOptions::HEADERS => [
-                    'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0',
+                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.7390.123 Safari/537.36',
+                    'Referer' => 'https://play.google.com/',
                 ],
             ];
 
