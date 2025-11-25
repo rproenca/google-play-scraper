@@ -72,7 +72,7 @@ class AppInfoScraper implements ParseHandlerInterface
         $country = $query[GPlayApps::REQ_PARAM_COUNTRY] ?? GPlayApps::DEFAULT_COUNTRY;
 
         $name = $appInfo[0][0];
-        $description = ScraperUtil::html2text($appInfo[72][0][1]);
+        $description = ScraperUtil::html2text($appInfo[12][0][0][1] ?? $appInfo[72][0][1]);
         $developer = $this->extractDeveloper($appInfo);
 
         $category = $this->extractCategory($appInfo[79][0][0] ?? []);
@@ -95,8 +95,8 @@ class AppInfoScraper implements ParseHandlerInterface
         $offersIAPCost = $appInfo[19][0] ?? null;
         $containsAds = (bool) ($appInfo[48][0] ?? false);
 
-        $androidVersion = $appInfo[140][1][1][0][0][1] ?? null;
-        $appVersion = $appInfo[140][0][0][0] ?? null;
+        $androidVersion = $appInfo[140][1][1][0][0][1] ?? $appInfo[112][141][1][1][0][0][1] ?? $appInfo[103][141][1][1][0][0][1] ?? null;
+        $appVersion = $appInfo[140][0][0][0] ?? $appInfo[112][141][0][0][0] ?? $appInfo[103][141][0][0][0] ?? null;
 
         if ($androidVersion !== null) {
             $minAndroidVersion = preg_replace('~.*?(\d+(\.\d+)*).*~', '$1', $androidVersion);
@@ -110,9 +110,9 @@ class AppInfoScraper implements ParseHandlerInterface
         $cover = $this->extractCover($appInfo);
         $screenshots = $this->extractScreenshots($appInfo);
         $video = $this->extractVideo($appInfo);
-        $contentRating = $appInfo[111][1] ?? '';
+        $contentRating = $appInfo[9][0] ?? '';
         $released = $this->convertDate($appInfo[10][1][0] ?? null);
-        $updated = $this->convertDate($appInfo[145][0][1][0] ?? null);
+        $updated = $this->convertDate($appInfo[145][0][1][0] ?? $appInfo[112][146][0][1][0] ?? $appInfo[103][146][0][1][0] ?? null);
         $recentChanges = $this->extractRecentChanges($appInfo);
 
         $reviews = $this->extractReviews(new AppId($id, $locale, $country), $scriptData);
